@@ -17,14 +17,15 @@ async def on_message(input_message: cl.Message):
     chain: CompiledStateGraph = cl.user_session.get("chain")
     session_id = cl.user_session.get("id")
 
-    inputs = {
-        "messages": [
-            HumanMessage(
-                content=[
-                    {"type": "text", "text": input_message.content},
-                ]
-            )
+    message = HumanMessage(
+        content=[
+            {"type": "text", "text": input_message.content},
         ]
+    )
+    message.pretty_print()
+
+    inputs = {
+        "messages": [message]
     }
     config: RunnableConfig = {"configurable": {"thread_id": session_id}}
 
